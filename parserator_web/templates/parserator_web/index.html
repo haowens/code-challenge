@@ -40,11 +40,11 @@
 {% block extra_js %}
   <script src="{% static 'js/index.js' %}"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const form = document.querySelector('form');
-      const resultsDiv = document.getElementById('address-results');
-      const addressTypeDiv = document.getElementById('parse-type');
-      const tbody = document.querySelector('#address-results tbody');
+   
+    const form = document.querySelector('form');
+    const resultsDiv = document.getElementById('address-results');
+    const addressTypeDiv = document.getElementById('parse-type');
+    const tbody = document.querySelector('#address-results tbody');
 
     form.addEventListener('submit', function(event) {
       event.preventDefault(); 
@@ -89,7 +89,7 @@
         console.error('Error:', error);
       });
     });
-  });
+
   </script>
   </script>
 
