@@ -39,4 +39,58 @@
 
 {% block extra_js %}
   <script src="{% static 'js/index.js' %}"></script>
+  <script>
+   
+    const form = document.querySelector('form');
+    const resultsDiv = document.getElementById('address-results');
+    const addressTypeDiv = document.getElementById('parse-type');
+    const tbody = document.querySelector('#address-results tbody');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); 
+
+      const formData = new FormData(form);
+      const address = formData.get('address');
+
+      fetch('/api/parse/?address=' + address)
+      .then(response => response.json())
+      .then(data => {
+
+        tbody.innerHTML = ''; // clears previous results
+        resultsDiv.style.display = 'block';
+
+        if (!data.error) {
+    
+        const { address_components, address_type } = data;
+
+        addressTypeDiv.textContent = address_type;
+
+        let makeTableRow = (component) => {
+          const row = document.createElement('tr');
+          const addressPart = document.createElement('td');
+          const partTag = document.createElement('td');
+          addressPart.textContent = component[0];
+          partTag.textContent = component[1];
+          row.appendChild(addressPart);
+          row.appendChild(partTag);
+          tbody.appendChild(row);
+        }
+
+        Object.entries(address_components).map((component) => {
+          makeTableRow(component)
+        });
+
+      } else {
+        tbody.textContent = "invalid address, could not parse"
+      }
+
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+
+  </script>
+  </script>
+
 {% endblock %}
