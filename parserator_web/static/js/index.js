@@ -18,6 +18,7 @@ form.addEventListener('submit', async function(event) {
    .then(data => {
 
    table.innerHTML = '';
+   tbody.innerHTML = '';
    resultsDiv.style.display = 'block';
 
    if (!data.error) {
